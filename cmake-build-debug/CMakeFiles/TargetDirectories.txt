@@ -1,0 +1,3 @@
+/home/adani/CLionProjects/OSEx3/cmake-build-debug/CMakeFiles/OSEx3.dir
+/home/adani/CLionProjects/OSEx3/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/adani/CLionProjects/OSEx3/cmake-build-debug/CMakeFiles/rebuild_cache.dir
