@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include <vector>
 #include <thread>
 #include <chrono>
@@ -7,58 +8,74 @@
 #include "Producer.h"
 #include "Dispatcher.h"
 #include "CoEditor.h"
+#include "ScreenManager.h"
 
 using namespace std;
 
-void producers() {
+int main(int argc, char *argv[]) {
+    // Checking for conf file
+    if (argc < 2) {
+        cout << "Not enough arguments!" << endl;
+        return 1;
+    }
 
-}
-
-// Reads the configuration file
-void writeToScreen() {
-//    int done = 0, produced;
-//
-//    while(done < 3) {
-//        if (produced == 2) produced = 0;
-//
-//
-//        produced++;
-//    }
-}
-
-int main() {
+    // Initialize
     vector<Producer*> prod;
     vector<thread> threads;
     vector<BoundedQueue*> *bQueue = new vector<BoundedQueue*>;
     vector<UnboundedQueue*> *uQueue = new vector<UnboundedQueue*>;
     vector<CoEditor*> editors;
     Dispatcher* dispatcher;
-    BoundedQueue* toPrint = new BoundedQueue(17);
 
-    bQueue->push_back(new BoundedQueue(3));
+    // Reading the configurations
+    string input1, input2, input3;
+    ifstream stream(argv[1]);
+    do {
+        getline(stream, input1);
+        if(!getline(stream, input2)) {      // EOF
+            break;
+        }
+        getline(stream, input3);
+
+        bQueue->push_back(new BoundedQueue(stoi(input3)));
+        prod.push_back(new Producer(stoi(input1), stoi(input2), bQueue->back()));
+        getline(stream, input1);
+    } while(true);
+
+    // Last input
+    BoundedQueue* toPrint = new BoundedQueue(stoi(input1));
+    ScreenManager* scrMan = new ScreenManager(toPrint);
+
+    // Co-Editors init
     for (int i = 0; i < 3; i++) {
         uQueue->push_back(new UnboundedQueue());
         editors.push_back(new CoEditor(uQueue->at(i), toPrint));
     }
 
-    prod.push_back(new Producer(1,5,bQueue->at(0)));
-    threads.push_back(thread([prod]() { prod[0]->produce(); }));
+    // Running the Producers
+    for (int j = 0; j < prod.size(); j++) {
+        threads.push_back(thread([prod, j]() { prod[j]->produce(); }));
+    }
 
-
+    // Running the Dispatcher
     dispatcher = new Dispatcher(bQueue, uQueue);
     threads.push_back(thread([dispatcher](){ dispatcher->dispatch(); }));
 
+    // Running the Co-Editors
     for (CoEditor* editor : editors) {
         threads.push_back(thread([editor](){ editor->edit(); }));
     }
-//
-//    std::chrono::seconds time(10);
-//    this_thread::sleep_for(time);
-    for (thread &t : threads) if (t.joinable()) t.join();       // Join all threads
 
-    for (int i = 0; i < 8; i++) cout << toPrint->remove() << endl;
+    // Running the Screen Manager
+    threads.push_back(thread([scrMan](){ scrMan->print(); }));
+
+    // Join all threads
+    for (thread &t : threads) if (t.joinable()) t.join();
+
+    // Cleaning
     prod.clear();
-    delete dispatcher;
+    delete dispatcher; // also deletes all used queues
     editors.clear();
-    delete toPrint;
+    delete toPrint; // also deletes the last queue
+    return 0;
 }

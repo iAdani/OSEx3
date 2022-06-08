@@ -15,7 +15,7 @@ class Producer {
     vector<int> produced;
 
     // Returns the subject by modulo 3
-    string getSubject();
+    string getSubject(int num);
 
 public:
     Producer(int id, int products, BoundedQueue *q);

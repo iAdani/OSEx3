@@ -14,14 +14,22 @@ void Dispatcher::dispatch() {
     int producers = inQueue->size();
     string str;
 
+    vector<bool> isDone;
+    for (int j = 0; j < producers; j++) isDone.push_back(false);
+
     while (done < producers) {
+        if (isDone.at(i) == true) {
+            i = (i + 1) % producers;
+            continue;
+        }
         str = inQueue->at(i)->remove();
         if (str == "DONE") {
             done++;
+            isDone.at(i) = true;
+            i = (i + 1) % producers;
             continue;
         }
-        i++;
-        if (i == producers) i -= producers;
+        i = (i + 1) % producers;
         outQueue->at(getSubject(str))->insert(str);
     }
     for (i = 0; i < 3; i++) outQueue->at(i)->insert("DONE");
