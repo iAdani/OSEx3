@@ -2,8 +2,8 @@
 // Created by adani on 6/7/22.
 //
 
-#ifndef OSEX3_BOUNDEDQUEUE_H
-#define OSEX3_BOUNDEDQUEUE_H
+#ifndef OSEX3_UNBOUNDEDQUEUE_H
+#define OSEX3_UNBOUNDEDQUEUE_H
 
 #include <iostream>
 #include <string>
@@ -15,13 +15,13 @@ using namespace std;
 class UnboundedQueue : public queue<string> {
     queue<string> q;
     mutex m;
-    sem_t *insem, *outsem;
+    sem_t outsem;
 
 public:
-    UnboundedQueue(int size);
+    UnboundedQueue();
     void insert(string str);
     string remove();
 };
 
 
-#endif //OSEX3_BOUNDEDQUEUE_H
+#endif //OSEX3_UNBOUNDEDQUEUE_H

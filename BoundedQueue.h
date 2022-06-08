@@ -15,7 +15,7 @@ using namespace std;
 class BoundedQueue : public queue<string> {
     queue<string> q;
     mutex m;
-    sem_t *insem, *outsem;
+    sem_t insem, outsem;
 
 public:
     BoundedQueue(int size);

@@ -6,13 +6,16 @@
 #define OSEX3_COEDITOR_H
 
 #include "UnboundedQueue.h"
+#include "BoundedQueue.h"
 #include <thread>
 
 class CoEditor {
-    UnboundedQueue queue;
+    UnboundedQueue *inQueue;
+    BoundedQueue *outQueue;
+
 
 public:
-    CoEditor(int size);
+    CoEditor(UnboundedQueue *in, BoundedQueue *out);
     void edit();
 };
 

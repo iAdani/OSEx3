@@ -4,21 +4,21 @@
 
 #include "Producer.h"
 
-Producer::Producer(int id, int products, int size) : queue(size), produced() {
+Producer::Producer(int id, int products, BoundedQueue *q) : produced() {
+    this->queue = q;
     this->id = to_string(id);
     this->products = products;
-    for(int i = 0; i < 3; i++) produced.push_back(-1);
+    for(int i = 0; i < 3; i++) produced.push_back(0);
 }
 
 void Producer::produce() {
-    std::thread t( [=]() {
-        string str;
-        while (products > 0) {
-            str = "Producer " + this->id + getSubject();
-            queue.insert(str);
-            products--;
-        }
-    });
+    string str;
+    while (products > 0) {
+        str = "Producer " + this->id + getSubject();
+        queue->insert(str);
+        products--;
+    }
+    queue->insert("DONE");
 }
 
 string Producer::getSubject() {
@@ -27,5 +27,11 @@ string Producer::getSubject() {
     if (num == 1) return " NEWS " + to_string(produced[1]++);
     return " WEATHER " + to_string(produced[2]++);
 }
+
+BoundedQueue *Producer::getQueue() {
+    return this->queue;
+}
+
+Producer::~Producer() { }
 
 

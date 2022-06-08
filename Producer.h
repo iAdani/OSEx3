@@ -5,21 +5,25 @@
 #ifndef OSEX3_PRODUCER_H
 #define OSEX3_PRODUCER_H
 
-#include "BoundedQueue.h"
 #include <thread>
+#include "BoundedQueue.h"
 
 class Producer {
     string id;
     int products;
-    BoundedQueue queue;
+    BoundedQueue *queue;
     vector<int> produced;
 
     // Returns the subject by modulo 3
     string getSubject();
 
 public:
-    Producer(int id, int products, int size);
+    Producer(int id, int products, BoundedQueue *q);
+    ~Producer();
+    BoundedQueue* getQueue();
     void produce();
+
+
 };
 
 
