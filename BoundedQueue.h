@@ -1,6 +1,5 @@
-//
-// Created by adani on 6/7/22.
-//
+// Guy Adani 208642884
+
 
 #ifndef OSEX3_BOUNDEDQUEUE_H
 #define OSEX3_BOUNDEDQUEUE_H
@@ -19,6 +18,7 @@ class BoundedQueue : public queue<string> {
 
 public:
     BoundedQueue(int size);
+    ~BoundedQueue();
     void insert(string str);
     string remove();
 };

@@ -1,6 +1,4 @@
-//
-// Created by adani on 6/8/22.
-//
+// Guy Adani 208642884
 
 #ifndef OSEX3_DISPATCHER_H
 #define OSEX3_DISPATCHER_H

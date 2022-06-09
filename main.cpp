@@ -1,3 +1,5 @@
+// Guy Adani 208642884
+
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -45,6 +47,7 @@ int main(int argc, char *argv[]) {
     // Last input
     BoundedQueue* toPrint = new BoundedQueue(stoi(input1));
     ScreenManager* scrMan = new ScreenManager(toPrint);
+    stream.close();
 
     // Co-Editors init
     for (int i = 0; i < 3; i++) {
@@ -73,9 +76,14 @@ int main(int argc, char *argv[]) {
     for (thread &t : threads) if (t.joinable()) t.join();
 
     // Cleaning
-    prod.clear();
+    for (Producer* p : prod) delete p;
     delete dispatcher; // also deletes all used queues
-    editors.clear();
+    for (BoundedQueue* bq : *bQueue) delete bq;
+    delete bQueue;
+    for (UnboundedQueue* uq : *uQueue) delete uq;
+    delete uQueue;
+    for (CoEditor* e : editors) delete e;
     delete toPrint; // also deletes the last queue
+    delete scrMan;
     return 0;
 }

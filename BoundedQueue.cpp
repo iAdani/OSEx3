@@ -1,6 +1,4 @@
-//
-// Created by adani on 6/7/22.
-//
+// Guy Adani 208642884
 
 #include "BoundedQueue.h"
 
@@ -30,4 +28,7 @@ string BoundedQueue::remove() {
     m.unlock();
     sem_post(&insem);
     return str;
+}
+
+BoundedQueue::~BoundedQueue() {
 }

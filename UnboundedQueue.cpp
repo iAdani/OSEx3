@@ -1,6 +1,4 @@
-//
-// Created by adani on 6/7/22.
-//
+// Guy Adani 208642884
 
 #include "UnboundedQueue.h"
 

@@ -1,6 +1,4 @@
-//
-// Created by adani on 6/8/22.
-//
+// Guy Adani 208642884
 
 #include "ScreenManager.h"
 
@@ -8,7 +6,7 @@ ScreenManager::ScreenManager(BoundedQueue *q) {
     this->queue = q;
 }
 
-ScreenManager::~ScreenManager() { delete queue; }
+ScreenManager::~ScreenManager() { }
 
 void ScreenManager::print() {
     int done = 0;
@@ -21,6 +19,6 @@ void ScreenManager::print() {
             continue;
         }
         cout << str << endl;
-        this_thread::sleep_for(chrono::milliseconds(100));
     }
+    cout << "DONE" << endl;
 }

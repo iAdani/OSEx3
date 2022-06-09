@@ -1,6 +1,4 @@
-//
-// Created by adani on 6/8/22.
-//
+// Guy Adani 208642884
 
 #include "Dispatcher.h"
 
@@ -35,12 +33,7 @@ void Dispatcher::dispatch() {
     for (i = 0; i < 3; i++) outQueue->at(i)->insert("DONE");
 }
 
-Dispatcher::~Dispatcher() {
-    inQueue->clear();
-    delete inQueue;
-    outQueue->clear();
-    delete outQueue;
-}
+Dispatcher::~Dispatcher() { }
 
 int Dispatcher::getSubject(string str) {
     int spaces = 0, i = 0;

@@ -1,12 +1,8 @@
-//
-// Created by adani on 6/8/22.
-//
+// Guy Adani 208642884
 
 #ifndef OSEX3_SCREENMANAGER_H
 #define OSEX3_SCREENMANAGER_H
 
-#include <chrono>
-#include <thread>
 #include "BoundedQueue.h"
 
 

@@ -1,6 +1,5 @@
-//
-// Created by adani on 6/8/22.
-//
+// Guy Adani 208642884
+
 
 #include "CoEditor.h"
 
@@ -13,6 +12,7 @@ void CoEditor::edit() {
     string str;
     while(str != "DONE") {
         str = inQueue->remove();
+        this_thread::sleep_for(chrono::milliseconds(100));
         outQueue->insert(str);
     }
 }
