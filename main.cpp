@@ -1,10 +1,11 @@
 // Guy Adani 208642884
+//
+// Using option 2 of configuration file!
 
 #include <iostream>
 #include <fstream>
 #include <vector>
 #include <thread>
-#include <chrono>
 #include "BoundedQueue.h"
 #include "UnboundedQueue.h"
 #include "Producer.h"
